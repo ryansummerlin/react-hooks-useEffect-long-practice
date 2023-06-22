@@ -1,3 +1,5 @@
+import React from 'react';
+import { useEffect, useState } from 'react';
 import turkey from "../images/turkey.png";
 import feather1 from "../images/feather1.svg";
 import feather2 from "../images/feather2.svg";
@@ -23,24 +25,63 @@ const feathers = [
   featherA,
 ];
 
-function PictureDisplay ({ size, featherCount, featherColors }) {
-  console.log('PictureDisplay', size, featherCount, featherColors);
+function PictureDisplay ({ sizeClass, featherCount, featherColors }) {
 
-  // TODO: Wrap in useEffect
-  const colors = [];
-  if (!featherColors || featherColors.length === 0) featherColors = [''];
-  for (let i=0; i<featherCount; i++) {
-    colors.push(featherColors[i % featherColors.length]);
-  }
+
+  // useEffect(() => {
+  //   console.log('PictureDisplay', size, featherCount, featherColors);
+  // }, [size, featherCount, featherColors] );
+
+  // const [sizeClass, setSizeClass] = useState('');
+  const [turkeyColors, setTurkeyColors] = useState([]);
+
+  // useEffect(() => {
+  //   console.log('PictureDisplay size', size);
+  //   let cname = '';
+  //       switch (size) {
+  //           case 'm':
+  //               cname = 'medium';
+  //               break;
+  //           case 'l':
+  //               cname = 'large';
+  //               break;
+  //           case 'xl':
+  //               cname = 'xlarge';
+  //               break;
+  //           default:
+  //               cname = 'small';
+  //               break;
+  //       }
+  //       setSizeClass(cname);
+  // }, [size]);
+
+  useEffect(() => {
+      console.log('PictureDisplay feather count', featherCount);
+  }, [featherCount]);
+
+  useEffect(() => {
+      console.log('PictureDisplay feather colors', featherColors);
+  }, [featherColors]);
+
+  useEffect(() => {
+    const colors = [];
+
+    if (!featherColors || featherColors.length === 0) featherColors = [''];
+    for (let i=0; i<featherCount; i++) {
+      colors.push(featherColors[i % featherColors.length]);
+    }
+
+    setTurkeyColors(colors);
+  }, [featherCount, featherColors])
 
   return (
-    <div className={`image-area medium`}>
-      {colors.map((c, i) =>
-        <img  
-          key={feathers[i]} 
-          src={feathers[i]} 
-          className={`image-feather ${c}`} 
-          alt="" 
+    <div className={`image-area ${sizeClass}`}>
+      {turkeyColors.map((c, i) =>
+        <img
+          key={feathers[i]}
+          src={feathers[i]}
+          className={`image-feather ${c}`}
+          alt=""
         />
       )}
 
